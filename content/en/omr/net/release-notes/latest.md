@@ -15,20 +15,19 @@ keywords:
 - changelog
 ---
 
----
 {{% alert color="primary" %}}
-This article contains a summary of recent changes, enhancements and bug fixes in [**Aspose.OMR for .NET 25.7.0 (July 2025)**](https://www.nuget.org/packages/Aspose.OMR/25.7.0) release.
+This article contains a summary of recent changes, enhancements and bug fixes in [**Aspose.OMR for .NET 25.8.0 (August 2025)**](https://www.nuget.org/packages/Aspose.OMR/25.8.0) release.
 {{% /alert %}}
 
 ## What was changed
 
 Key | Summary | Category
 --- | ------- | --------
-OMRNET&#8209;1156 | Added support for multiple symbols inside ChoiceBox bubble  | New feature
+OMRNET&#8209;1174 | Fixed issue with incorrect rotation detection. See [Issues with rotation detection](#issue-with-rotation-detection). | Fix
 
 ## Public API changes and backwards compatibility
 
-This section lists all public API changes introduced in **Aspose.OMR for .NET 25.7.0** that may affect the code of existing applications.
+This section lists all public API changes introduced in **Aspose.OMR for .NET 25.8** that may affect the code of existing applications.
 
 ### Added public APIs:
 
@@ -42,53 +41,28 @@ _No changes._
 
 _No changes._
 
-## Usage examples
+### Issue with rotation detection
 
-See the examples below to learn more about the changes introduced in this release:
+During recognition of template images some rotation cases of [non-default rotation point positions](#affected-rotation-point-positions) were not properly recognized: throwing exceptions "Unable to rotate template", "Unable to detect rotation" etc.
+We sorry for any inconvenience it may caused.
+Since 25.8 this issue is resolved. 
 
-### C# code for template generation with multiple symbols inside bubble
+We are happy to receive your feedback on features\bugs at our [Free support forum](https://forum.aspose.com/c/omr/38);
 
-```csharp
-var templateConfig = new TemplateConfig();
-var choiceBoxConfig = new ChoiceBoxConfig()
-{
-    Name = "Is mark required",
-    DisplayQuestionNumber = false,
-    QuestionText = $"Do you have to mark up every question on the page?",
-    
-};
+### Affected rotation point positions
 
-var yesAnswer = new ChoiceBoxAnswerConfig()
-{
-    Name = "Yes, that will help a lot!",
-    BubbleValue = $"Yes",
-};
+ Enum | Position |
+------- | ------- | 
+ RotationPointPosition.BottomLeft1  | ![BottomLeft1](../2022/BottomLeft1.png)
+ RotationPointPosition.BottomLeft2 | ![BottomLeft2](../2022/BottomLeft2.png)
+ RotationPointPosition.BottomRight1 | ![BottomRight1](../2022/BottomRight1.png)
+ RotationPointPosition.BottomRight2 | ![BottomRight2](../2022/BottomRight2.png)
+ RotationPointPosition.TopLeft1 | ![TopLeft1](../2022/TopLeft1.png)
+ RotationPointPosition.TopLeft2 | ![TopLeft2](../2022/TopLeft2.png)
+ RotationPointPosition.TopRight2 | ![TopRight2](../2022/TopRight2.png)
 
-var noAnswer = new ChoiceBoxAnswerConfig()
-{
-    Name = "No, it is optional",
-    BubbleValue = $"No",
-};
-
-
-choiceBoxConfig.Children.Add(noAnswer);
-choiceBoxConfig.Children.Add(yesAnswer);
-templateConfig.Children.Add(choiceBoxConfig);
-
-var result = engine.Generate(templateConfig, settings);
-result.Save(@"C:\Users\User\Desktop\two_digits_in_bubble","two_digits");
-```
-
-### Text markup for template generation with multiple symbols inside bubble
-```txt
-?choicebox=Do you have to mark up every question on the page?
-?option=Yes, that will help a lot! 
-    bubble_value=Yes
-?option=No, it is optional 
-    bubble_value=No
-&choicebox
-```
-
-### Example of generated template
-
-![multiple symbols inside bubble](../2025/multiple_symbols.png)
+ 
+### Unaffected rotation point positions
+ Enum | Position |
+------- | ------- | 
+ RotationPointPosition.TopRight1 (default)| ![TopRight1](../2022/TopRight1.png)
