@@ -2,7 +2,7 @@
 id: "aspose-ocr-for-java-latest-release-notes"
 slug: "latest"
 weight: 1
-date: "2025-04-15"
+date: "2025-09-15"
 author: "Anna Pylaieva"
 type: "repository"
 layout: "release"
@@ -17,8 +17,10 @@ keywords:
 - changelog
 ---
 
+---
+
 {{% alert color="primary" %}}
-This article contains a summary of recent changes, enhancements and bug fixes in **Aspose.OCR for Java 25.8.0 (August 2025)** release.
+This article contains a summary of recent changes, enhancements and bug fixes in **Aspose.OCR for Java 25.9.0 (September 2025)** release.
 
 GPU version: **23.10.1**
 {{% /alert %}}
@@ -27,21 +29,16 @@ GPU version: **23.10.1**
 
 Key | Summary | Category
 --- | ------- | --------
-OCRJAVA&#8209;438 | Enhanced Excel output and table layout detection when using `DetectAreasMode.TABLE`, resulting in more accurate structure extraction and improved formatting. | Enhancement
-OCRJAVA&#8209;436 | Updated ONNX Runtime to version **1.22.1** for improved performance, stability, and compatibility.| Enhancement
+OCRJAVA&#8209;439 | Enhanced Markdown output and layout detection, resulting in more accurate table and image extraction and improved formatting. | Enhancement
 
 ## Public API changes and backwards compatibility
 
-This section lists all public API changes introduced in **Aspose.OCR for Java 25.8.0** that August affect the code of existing applications.
+This section lists all public API changes introduced in **Aspose.OCR for Java 25.9.0** that September affect the code of existing applications.
 
 ### Added public APIs:
 
 _No changes._
 
-
-{{% alert color="info" %}}
-**Compatibility: fully backward compatible.** See details below.
-{{% /alert %}}
 
 ### Updated public APIs:
 
