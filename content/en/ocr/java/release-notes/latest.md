@@ -17,10 +17,8 @@ keywords:
 - changelog
 ---
 
----
-
 {{% alert color="primary" %}}
-This article contains a summary of recent changes, enhancements and bug fixes in **Aspose.OCR for Java 25.9.0 (September 2025)** release.
+This article contains a summary of recent changes, enhancements and bug fixes in **Aspose.OCR for Java 25.10.0 (October 2025)** release.
 
 GPU version: **23.10.1**
 {{% /alert %}}
@@ -29,11 +27,12 @@ GPU version: **23.10.1**
 
 Key | Summary | Category
 --- | ------- | --------
-OCRJAVA&#8209;439 | Enhanced Markdown output and layout detection, resulting in more accurate table and image extraction and improved formatting. | Enhancement
+OCRJAVA&#8209;442 | Enhanced `setUpscaleSmallFont` behavior in `RecognitionSettings` to improve recognition quality based on the customer's issue. | Enhancement
+OCRJAVA&#8209;441 | Updated `Aspose.PDF` dependency to version **25.9** to improve stability and compatibility.| Enhancement
 
 ## Public API changes and backwards compatibility
 
-This section lists all public API changes introduced in **Aspose.OCR for Java 25.9.0** that September affect the code of existing applications.
+This section lists all public API changes introduced in **Aspose.OCR for Java 25.10.0** that October affect the code of existing applications.
 
 ### Added public APIs:
 
