@@ -1,0 +1,91 @@
+# This is a basic workflow to help you get started with Actions
+
+name: releases.aspose.com (Prod)
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ main ]
+    paths:
+      - 'themes/downloads-common-theme/**'
+      - 'layouts/**'
+      - 'content/de/_index.md'
+      - 'content/el/_index.md'
+      - 'content/en/_index.md'
+      - 'content/es/_index.md'
+      - 'content/fr/_index.md'
+      - 'content/id/_index.md'
+      - 'content/ja/_index.md'
+      - 'content/pt/_index.md'
+      - 'content/ru/_index.md'
+      - 'content/tr/_index.md'
+      - 'content/zh/_index.md'
+
+  pull_request:
+    branches: [ main1 ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    ## Updated the runner as per https://github.com/actions/runner-images/issues/13046
+    # runs-on: macos-14
+    runs-on: macos-15-intel  # was: macos-13 or ubuntu-latest
+    # timeout-minutes: 120 # 2 hours
+    
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            submodules: true  # Fetch Hugo themes
+            fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      # Step 2 - Sets up the latest version of Hugo
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+            hugo-version: '0.101.0'
+
+      # Also specifies the theme we want to use
+      - name: Build
+        run: hugo --config "./config/config-prod-releases-aspose-com.toml" -b "https://releases.aspose.com/" --cleanDestinationDir --minify
+
+      - name: Prepare public folder
+        run: |
+          mv public/de/sitemap.xml public/de/sitemap-tags.xml;
+          mv public/el/sitemap.xml public/el/sitemap-tags.xml;
+          mv public/en/sitemap.xml public/en/sitemap-tags.xml;
+          mv public/es/sitemap.xml public/es/sitemap-tags.xml;
+          mv public/fr/sitemap.xml public/fr/sitemap-tags.xml;
+          mv public/id/sitemap.xml public/id/sitemap-tags.xml;
+          mv public/ja/sitemap.xml public/ja/sitemap-tags.xml;
+          mv public/pt/sitemap.xml public/pt/sitemap-tags.xml;
+          mv public/ru/sitemap.xml public/ru/sitemap-tags.xml;
+          mv public/tr/sitemap.xml public/tr/sitemap-tags.xml;
+          mv public/zh/sitemap.xml public/zh/sitemap-tags.xml;
+          ls public;
+
+      - name: Deploy releases.aspose.com (Prod) to S3
+        run: hugo --config "./config/config-prod-releases-aspose-com.toml" deploy --target "Prod" --maxDeletes 0 --verbose
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS }}
+
+      # Invalidate Cloudfront Home Page
+      - name: invalidate
+        continue-on-error: true
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
+          DISTRIBUTION: ${{ secrets.AWS_DISTRIBUTION_PROD }}
+          PATHS: / /**
+          AWS_REGION: 'us-west-2'
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS }}

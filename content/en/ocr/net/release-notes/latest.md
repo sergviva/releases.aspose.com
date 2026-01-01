@@ -2,7 +2,7 @@
 id: "aspose-ocr-for-net-latest-release-notes"
 slug: "latest"
 weight: 1
-date: "2025-09-14"
+date: "2025-12-26"
 author: "Anna Pylaieva"
 type: docs
 type: "repository"
@@ -18,7 +18,7 @@ keywords:
 ---
 
 {{% alert color="primary" %}}
-This article contains a summary of recent changes, enhancements and bug fixes in **Aspose.OCR for .NET 25.9.1 (September 2025)** release.
+This article contains a summary of recent changes, enhancements and bug fixes in **Aspose.OCR for .NET 25.12.0 (December 2025)** release.
 
 GPU version: **25.10.0**
 {{% /alert %}}
@@ -27,29 +27,30 @@ GPU version: **25.10.0**
 
 Key | Summary | Category
 --- | ------- | --------
-OCRNET&#8209;1096 | Issue with OCR Accuracy using Aspose.OCR on PDF. Table recognition improved. | Enhancement
+OCRNET&#8209;1146 | Integrated the new LLM AI library into the project.| New feature
+OCRNET&#8209;1140 | Removed all obsolete fields and functions.| Enhancement
 
 ## Public API changes and backwards compatibility
 
-This section lists all public API changes introduced in **Aspose.OCR for .NET 25.9.1** that September affect the code of existing applications.
+This section lists all public API changes introduced in **Aspose.OCR for .NET 25.12.0** that December affect the code of existing applications.
 
 ### Added public APIs:
 
-_No changes._
+The following public APIs have been introduced in this release:
 
-### Updated public APIs:
+#### `RecognizeFormulaAI(OcrInput input)` method
 
-The following public APIs have been updated in Aspose.OCR for .NET 25.9.1 release:
+ ⚠️ **Disclaimer:**  
+ By using AI-powered features, you are solely responsible for ensuring compliance with any  
+ applicable laws, licensing terms, third-party AI model usage policies, and data privacy regulations.  
+ Aspose does not take responsibility for the accuracy, licensing, or reliability of external AI models.
 
-#### `BaseRecognitionSettings.RecognizeVerticalLines` property
+  ⚠️ **Disclaimer:**  
+ The RecognizeFormulaAI feature is not supported in .NET Framework.
 
-Aspose.OCR for .NET no longer detects and recognizes vertical lines automatically. Set this property to <c>true</c> to explicitly enable 
-vertical text recognition (useful for vertically oriented text fragments on an image that primarily contains horizontal text)
+A specialized recognition method for extracting and recognizing formulas from images using AI.
 
-**New property**
-| Method                     | Description                                                                                                                                    |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `RecognizeVerticalLines`   | Gets or sets a value indicating whether vertical text lines should be detected and recognized in addition to horizontal ones. Default is false.|
+[`RecognizeFormulaAI()`](https://reference.aspose.com/ocr/net/aspose.ocr/asposeocr/recognizeformulaai/) 
 
 
 {{% alert color="info" %}}
@@ -57,6 +58,56 @@ vertical text recognition (useful for vertically oriented text fragments on an i
 {{% /alert %}}
 
 
+
+### Updated public APIs:
+
+The following public APIs have been changed in **Aspose.OCR for .NET 25.12.0** release:
+
+#### `AsposeAIModelConfig` class
+
+### Removed
+`string? HuggingFaceQuantization { get; set; }` Examples: "int8", "fp16", "none".
+### Added
+`public string? HuggingFaceFileName { get; set; }` Examples: "TableGPT2-7B.Q4_K_S.gguf".
+
+
+{{% alert color="caution" %}}
+**Compatibility: partial backward compatibility.** Read the details below.
+{{% /alert %}}
+
+
 ### Removed public APIs:
 
-_No changes._
+The following public APIs was removed:
+
+#### `RecognitionResult.RecognitionAreasText`
+
+#### `RecognitionResult.RecognitionAreasRectangles`
+
+#### `RecognitionResult.Skew`
+
+#### `CharacterRecognitionResult.ImageIndex`
+
+#### `SkewOutput.ImageIndex`
+
+#### `OcrPageRecognizeEventsArgs.CurrentImage`
+
+## Examples
+
+The code samples below illustrate the changes introduced in this release:
+
+### RecognizeFormulaAI(OcrInput images)
+```csharp
+Aspose.OCR.AsposeOcr recognitionEngine = new Aspose.OCR.AsposeOcr();
+// Add images to OcrInput object
+Aspose.OCR.OcrInput input = new Aspose.OCR.OcrInput(Aspose.OCR.InputType.SingleImage);
+input.Add("source1.png");
+input.Add("source2.jpg");
+
+// Recognize formulas on the image using AI:
+List<Aspose.OCR.AI.AIResult> results = recognitionEngine.RecognizeFormulaAI(input);
+foreach(Aspose.OCR.AI.AIResult result in results)
+{
+	Console.WriteLine(result.RecognitionText);
+}
+```
